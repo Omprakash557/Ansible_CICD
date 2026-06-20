@@ -1,0 +1,32 @@
+---
+- name: Create EC2 Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    aws_access_key: ************
+    aws_secret_key: *****************
+    aws_region: ap-south-1
+
+  tasks:
+    - name: Launch Ubuntu EC2
+      amazon.aws.ec2_instance:
+        access_key: "{{ aws_access_key }}"
+        secret_key: "{{ aws_secret_key }}"
+        region: "{{ aws_region }}"
+
+        name: my-ubuntu-server
+        instance_type: t3.micro
+        image_id: ami-01a00762f46d584a1
+
+        wait: true
+        state: running
+
+      register: ec2
+
+    - name: Display instance details
+      debug:
+        msg:
+          - "Instance ID: {{ ec2.instances[0].instance_id }}"
+          - "Public IP: {{ ec2.instances[0].public_ip_address }}"
