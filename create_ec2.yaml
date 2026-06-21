@@ -10,8 +10,6 @@
   tasks:
     - name: Launch Ubuntu EC2
       amazon.aws.ec2_instance:
-        access_key: "{{ aws_access_key }}"
-        secret_key: "{{ aws_secret_key }}"
         region: "{{ aws_region }}"
 
         name: my-ubuntu-server
